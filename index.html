@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="NIVO - A simple modern platform interface for exploring digital assets and financial markets."
+    >
+
+    <title>NIVO — Invest Smarter</title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ====================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background: #f6f8fc;
+            color: #101828;
+
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =====================================================
+           VARIABLES
+        ====================================================== */
+
+        :root {
+
+            --dark: #07111f;
+            --dark-2: #0d1b2d;
+
+            --blue: #079bd7;
+            --blue-dark: #0577a8;
+            --blue-light: #e9f8ff;
+
+            --yellow: #f5c400;
+            --yellow-light: #fff9d9;
+
+            --green: #12b76a;
+            --red: #f04438;
+
+            --white: #ffffff;
+
+            --text: #101828;
+            --muted: #667085;
+
+            --border: #e4e7ec;
+
+            --shadow:
+                0 15px 40px rgba(16, 24, 40, 0.08);
+
+            --radius: 18px;
+        }
+
+
+        /* =====================================================
+           ANNOUNCEMENT BAR
+        ====================================================== */
+
+        .announcement {
+            height: 34px;
+
+            background: var(--dark);
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            font-size: 12px;
+        }
+
+        .announcement-track {
+
+            display: flex;
+
+            width: max-content;
+
+            animation:
+                announcementMove
+                30s
+                linear
+                infinite;
+        }
+
+        .announcement-item {
+
+            white-space: nowrap;
+
+            padding: 0 35px;
+        }
+
+        .announcement-item span {
+            color: var(--yellow);
+            font-weight: 700;
+        }
+
+        @keyframes announcementMove {
+
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        header {
+
+            background: white;
+
+            min-height: 105px;
+
+            padding:
+                15px
+                clamp(15px, 4vw, 55px);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+
+            border-bottom:
+                1px solid
+                var(--border);
+        }
+
+
+        /* =====================================================
+           ANIMATED LOGO BOX
+        ====================================================== */
+
+        .logo-box {
+
+            width: 175px;
+            height: 75px;
+
+            flex-shrink: 0;
+
+            border:
+                3px solid
+                var(--yellow);
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff,
+                    #fffbed
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .logo-animation {
+
+            width: 65px;
+            height: 55px;
+
+            position: relative;
+        }
+
+        .logo-bar {
+
+            position: absolute;
+
+            bottom: 4px;
+
+            width: 11px;
+
+            border-radius: 5px 5px 2px 2px;
+
+            background: var(--blue);
+
+            animation:
+                logoGrow
+                1.6s
+                ease-in-out
+                infinite
+                alternate;
+        }
+
+        .logo-bar:nth-child(1) {
+
+            left: 3px;
+
+            height: 20px;
+
+            animation-delay: 0s;
+        }
+
+        .logo-bar:nth-child(2) {
+
+            left: 19px;
+
+            height: 32px;
+
+            animation-delay: .2s;
+        }
+
+        .logo-bar:nth-child(3) {
+
+            left: 35px;
+
+            height: 43px;
+
+            animation-delay: .4s;
+        }
+
+        .logo-bar:nth-child(4) {
+
+            left: 51px;
+
+            height: 52px;
+
+            animation-delay: .6s;
+        }
+
+        .logo-arrow {
+
+            position: absolute;
+
+            left: 4px;
+            top: 1px;
+
+            width: 52px;
+            height: 32px;
+
+            border-top:
+                4px solid
+                var(--yellow);
+
+            border-right:
+                4px solid
+                var(--yellow);
+
+            transform:
+                rotate(-18deg)
+                skewX(-25deg);
+
+            animation:
+                arrowMove
+                2s
+                ease-in-out
+                infinite;
+        }
+
+        @keyframes logoGrow {
+
+            from {
+                transform: scaleY(.65);
+            }
+
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        @keyframes arrowMove {
+
+            0%,
+            100% {
+                transform:
+                    translateX(0)
+                    rotate(-18deg)
+                    skewX(-25deg);
+            }
+
+            50% {
+                transform:
+                    translateX(5px)
+                    rotate(-18deg)
+                    skewX(-25deg);
+            }
+        }
+
+
+        /* =====================================================
+           BRAND
+        ====================================================== */
+
+        .brand {
+
+            flex: 1;
+
+            min-height: 75px;
+
+            border:
+                3px solid
+                var(--yellow);
+
+            border-radius: 38px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #fffdf0,
+                    #ffffff
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-direction: column;
+        }
+
+        .brand h1 {
+
+            font-size:
+                clamp(28px, 4vw, 43px);
+
+            letter-spacing:
+                clamp(3px, 1vw, 8px);
+
+            line-height: 1;
+
+            font-weight: 900;
+        }
+
+        .brand h1 span {
+            color: var(--blue);
+        }
+
+        .brand p {
+
+            margin-top: 6px;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            color: var(--muted);
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           HEADER ACTIONS
+        ====================================================== */
+
+        .header-actions {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .login-btn {
+
+            padding:
+                11px
+                18px;
+
+            background: white;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 9px;
+
+            font-weight: 700;
+        }
+
+        .signup-btn {
+
+            padding:
+                11px
+                18px;
+
+            background:
+                var(--dark);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+        }
+
+        .login-btn:hover,
+        .signup-btn:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           MARKET TICKER / BLUE BAR
+        ====================================================== */
+
+        .ticker {
+
+            margin:
+                12px
+                clamp(12px, 3vw, 35px);
+
+            height: 52px;
+
+            border:
+                3px solid
+                var(--blue);
+
+            border-radius: 8px;
+
+            background: white;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+        .ticker-track {
+
+            display: flex;
+
+            align-items: center;
+
+            width: max-content;
+
+            animation:
+                tickerMove
+                35s
+                linear
+                infinite;
+        }
+
+        .ticker:hover .ticker-track {
+            animation-play-state: paused;
+        }
+
+        .ticker-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding:
+                0
+                25px;
+
+            white-space: nowrap;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .ticker-symbol {
+            color: var(--dark);
+        }
+
+        .up {
+            color: var(--green);
+        }
+
+        .down {
+            color: var(--red);
+        }
+
+        @keyframes tickerMove {
+
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ====================================================== */
+
+        nav {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap:
+                clamp(12px, 3vw, 40px);
+
+            padding: 10px 20px;
+
+            background: white;
+
+            border-bottom:
+                1px solid
+                var(--border);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+        nav a {
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #344054;
+
+            transition: .25s;
+        }
+
+        nav a:hover {
+
+            color: var(--blue);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+
+            min-height:
+                calc(100vh - 250px);
+
+            padding:
+                clamp(50px, 8vw, 100px)
+                clamp(20px, 8vw, 110px);
+
+            display: grid;
+
+            grid-template-columns:
+                1.1fr
+                .9fr;
+
+            gap: 70px;
+
+            align-items: center;
+
+            background:
+
+                radial-gradient(
+                    circle at 90% 10%,
+                    #dff5ff 0,
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f3faff
+                );
+        }
+
+
+        /* =====================================================
+           HERO TEXT
+        ====================================================== */
+
+        .hero-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                8px
+                13px;
+
+            background:
+                var(--blue-light);
+
+            color:
+                var(--blue-dark);
+
+            border-radius: 50px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 20px;
+        }
+
+        .pulse {
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background:
+                var(--green);
+
+            box-shadow:
+                0 0 0
+                0 rgba(18,183,106,.5);
+
+            animation:
+                pulse
+                1.7s
+                infinite;
+        }
+
+        @keyframes pulse {
+
+            70% {
+                box-shadow:
+                    0 0 0
+                    10px
+                    rgba(18,183,106,0);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0
+                    0
+                    rgba(18,183,106,0);
+            }
+        }
+
+        .hero h2 {
+
+            font-size:
+                clamp(42px, 6vw, 78px);
+
+            line-height:
+                1.02;
+
+            letter-spacing:
+                -3px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h2 span {
+            color: var(--blue);
+        }
+
+        .hero-text {
+
+            max-width: 650px;
+        }
+
+        .hero-text > p {
+
+            font-size:
+                clamp(16px, 2vw, 19px);
+
+            line-height: 1.7;
+
+            color:
+                var(--muted);
+
+            max-width: 600px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =====================================================
+           HERO BUTTONS
+        ====================================================== */
+
+        .hero-buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+
+            padding:
+                15px
+                24px;
+
+            background:
+                var(--blue);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 9px;
+
+            font-weight: 800;
+
+            transition: .3s;
+        }
+
+        .secondary-btn {
+
+            padding:
+                15px
+                24px;
+
+            background: white;
+
+            color: var(--dark);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 9px;
+
+            font-weight: 800;
+
+            transition: .3s;
+        }
+
+        .primary-btn:hover {
+
+            background:
+                var(--blue-dark);
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(7,155,215,.25);
+        }
+
+        .secondary-btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+
+        /* =====================================================
+           HERO MARKET CARD
+        ====================================================== */
+
+        .market-preview {
+
+            background:
+                rgba(255,255,255,.9);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                24px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(16,24,40,.12);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .market-preview::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            background:
+                var(--blue-light);
+
+            right: -70px;
+            top: -70px;
+        }
+
+        .market-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .market-top small {
+            color: var(--muted);
+        }
+
+        .market-price {
+
+            font-size: 25px;
+
+            font-weight: 900;
+        }
+
+        .chart-area {
+
+            height: 230px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .grid-lines {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 44px,
+                    #eef2f6 45px
+                );
+        }
+
+        .chart-line {
+
+            position: absolute;
+
+            width: 115%;
+
+            height: 100%;
+
+            left: -5%;
+
+            bottom: 0;
+        }
+
+        .chart-line svg {
+
+            width: 100%;
+
+            height: 100%;
+        }
+
+        .chart-stroke {
+
+            fill: none;
+
+            stroke:
+                var(--blue);
+
+            stroke-width: 4;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+
+            stroke-dasharray: 1000;
+
+            stroke-dashoffset: 1000;
+
+            animation:
+                drawChart
+                3s
+                ease-out
+                forwards;
+        }
+
+        @keyframes drawChart {
+
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .market-footer {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid
+                var(--border);
+
+            font-size: 13px;
+        }
+
+        .positive {
+            color: var(--green);
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           ASSET SECTION
+        ====================================================== */
+
+        .assets {
+
+            padding:
+                80px
+                clamp(20px, 8vw, 110px);
+
+            background: white;
+        }
+
+        .section-heading {
+
+            text-align: center;
+
+            max-width: 650px;
+
+            margin:
+                0 auto 45px;
+        }
+
+        .section-heading h2 {
+
+            font-size:
+                clamp(30px, 4vw, 45px);
+
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+
+            color: var(--muted);
+
+            line-height: 1.6;
+        }
+
+        .asset-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .asset-card {
+
+            padding: 28px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                var(--radius);
+
+            background:
+                #ffffff;
+
+            transition:
+                .3s;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .asset-card:hover {
+
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+        .asset-icon {
+
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                var(--blue-light);
+
+            font-size: 25px;
+
+            margin-bottom: 20px;
+        }
+
+        .asset-card h3 {
+
+            font-size: 20px;
+
+            margin-bottom: 10px;
+        }
+
+        .asset-card p {
+
+            color: var(--muted);
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+        .learn-link {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            color:
+                var(--blue);
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           BEGINNER SECTION
+        ====================================================== */
+
+        .beginner {
+
+            padding:
+                80px
+                clamp(20px, 8vw, 110px);
+
+            background:
+                var(--dark);
+            
+            color: white;
+        }
+
+        .beginner-container {
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 60px;
+
+            align-items: center;
+        }
+
+        .beginner h2 {
+
+            font-size:
+                clamp(32px, 5vw, 52px);
+
+            margin-bottom: 18px;
+        }
+
+        .beginner p {
+
+            color:
+                #b8c2d1;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+        .steps {
+
+            display: grid;
+
+            gap: 15px;
+        }
+
+        .step {
+
+            display: flex;
+
+            gap: 15px;
+
+            align-items: center;
+
+            padding: 15px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.1);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.04);
+        }
+
+        .step-number {
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background:
+                var(--blue);
+
+            font-weight: 900;
+        }
+
+
+        /* =====================================================
+           GLOBAL REGIONS
+        ====================================================== */
+
+        .regions {
+
+            padding:
+                70px
+                20px;
+
+            text-align: center;
+
+            background:
+                #f6f8fc;
+        }
+
+        .regions h2 {
+
+            font-size:
+                clamp(28px, 4vw, 40px);
+
+            margin-bottom: 12px;
+        }
+
+        .regions p {
+
+            color:
+                var(--muted);
+
+            margin-bottom: 30px;
+        }
+
+        .region-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+        .region {
+
+            padding:
+                12px
+                18px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            transition: .25s;
+        }
+
+        .region:hover {
+
+            border-color:
+                var(--blue);
+
+            color:
+                var(--blue);
+
+            transform:
+                translateY(-3px);
+        }
+
+
+        /* =====================================================
+           RISK NOTICE
+        ====================================================== */
+
+        .risk {
+
+            padding:
+                20px;
+
+            background:
+                #fff8e1;
+
+            border-top:
+                1px solid
+                #f4df91;
+
+            border-bottom:
+                1px solid
+                #f4df91;
+
+            text-align: center;
+
+            color:
+                #694d00;
+
+            font-size:
+                12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            background:
+                #040b14;
+
+            color:
+                white;
+
+            padding:
+                55px
+                clamp(20px, 7vw, 100px)
+                25px;
+        }
+
+        .footer-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr
+                1fr;
+
+            gap: 40px;
+
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h2 {
+
+            font-size: 28px;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 15px;
+        }
+
+        .footer-brand h2 span {
+            color: var(--blue);
+        }
+
+        .footer-brand p {
+
+            color:
+                #98a2b3;
+
+            line-height: 1.6;
+
+            max-width: 350px;
+        }
+
+        .footer-column h4 {
+
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+
+            display: block;
+
+            color:
+                #98a2b3;
+
+            margin-bottom: 10px;
+
+            font-size: 14px;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .copyright {
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.1);
+
+            color:
+                #667085;
+
+            font-size:
+                12px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           MOBILE MENU BUTTON
+        ====================================================== */
+
+        .menu-button {
+
+            display: none;
+
+            background:
+                var(--dark);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding:
+                10px
+                13px;
+
+            font-size: 20px;
+        }
+
+
+        /* =====================================================
+           TABLET
+        ====================================================== */
+
+        @media (max-width: 1000px) {
+
+            .header-actions {
+                display: none;
+            }
+
+            .hero {
+
+                grid-template-columns:
+                    1fr;
+
+                text-align: center;
+            }
+
+            .hero-text {
+
+                margin:
+                    auto;
+            }
+
+            .hero-buttons {
+
+                justify-content: center;
+            }
+
+            .market-preview {
+
+                max-width: 600px;
+
+                width: 100%;
+
+                margin: auto;
+            }
+
+            .asset-grid {
+
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .beginner-container {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .footer-grid {
+
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                min-height: 85px;
+
+                padding:
+                    10px 12px;
+
+                gap: 10px;
+            }
+
+            .logo-box {
+
+                width: 80px;
+
+                height: 62px;
+
+                border-width: 2px;
+            }
+
+            .brand {
+
+                min-height: 62px;
+
+                border-width: 2px;
+            }
+
+            .brand h1 {
+
+                font-size: 25px;
+
+                letter-spacing: 4px;
+            }
+
+            .brand p {
+
+                font-size: 7px;
+
+                letter-spacing: 1.5px;
+            }
+
+            nav {
+
+                justify-content:
+                    flex-start;
+
+                overflow-x:
+                    auto;
+
+                white-space:
+                    nowrap;
+
+                scrollbar-width:
+                    none;
+            }
+
+            nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .ticker {
+
+                margin:
+                    8px 10px;
+
+                height: 45px;
+            }
+
+            .hero {
+
+                padding:
+                    55px
+                    18px;
+            }
+
+            .hero h2 {
+
+                letter-spacing:
+                    -1.5px;
+            }
+
+            .asset-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .assets {
+
+                padding:
+                    60px
+                    18px;
+            }
+
+            .beginner {
+
+                padding:
+                    60px
+                    18px;
+            }
+
+            .regions {
+
+                padding:
+                    55px
+                    15px;
+            }
+
+            .footer-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            footer {
+
+                padding:
+                    45px
+                    20px
+                    20px;
+            }
+
+        }
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ====================================================== */
+
+        @media (max-width: 400px) {
+
+            .logo-box {
+                width: 65px;
+            }
+
+            .brand h1 {
+                font-size: 21px;
+            }
+
+            .brand p {
+                display: none;
+            }
+
+            .hero h2 {
+                font-size: 38px;
+            }
+
+            .primary-btn,
+            .secondary-btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         MOVING ANNOUNCEMENT
+    ====================================================== -->
+
+    <div class="announcement">
+
+        <div class="announcement-track">
+
+            <div class="announcement-item">
+                Welcome to <span>NIVO</span> — Simple. Modern. Transparent.
+            </div>
+
+            <div class="announcement-item">
+                Explore digital assets and financial markets.
+            </div>
+
+            <div class="announcement-item">
+                <span>Risk warning:</span>
+                Markets can rise or fall.
+            </div>
+
+            <div class="announcement-item">
+                Welcome to <span>NIVO</span> — Simple. Modern. Transparent.
+            </div>
+
+            <div class="announcement-item">
+                Explore digital assets and financial markets.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header>
+
+
+        <!-- Animated investment logo -->
+
+        <div class="logo-box">
+
+            <div class="logo-animation">
+
+                <div class="logo-bar"></div>
+                <div class="logo-bar"></div>
+                <div class="logo-bar"></div>
+                <div class="logo-bar"></div>
+
+                <div class="logo-arrow"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Website name -->
+
+        <div class="brand">
+
+            <h1>
+                NIV<span>O</span>
+            </h1>
+
+            <p>
+                INVEST • TRADE • LEARN
+            </p>
+
+        </div>
+
+
+        <!-- Header buttons -->
+
+        <div class="header-actions">
+
+            <button
+                class="login-btn"
+                onclick="demoMessage('Login')"
+            >
+                Login
+            </button>
+
+            <button
+                class="signup-btn"
+                onclick="demoMessage('Create Account')"
+            >
+                Get Started
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MOVING BLUE MARKET BAR
+    ====================================================== -->
+
+    <div class="ticker">
+
+        <div class="ticker-track">
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    BTC/USD
+                </span>
+                <span class="up">
+                    ▲ +2.48%
+                </span>
+            </div>
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    ETH/USD
+                </span>
+                <span class="up">
+                    ▲ +1.73%
+                </span>
+            </div>
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    VOLATILITY 100
+                </span>
+                <span class="down">
+                    ▼ -0.84%
+                </span>
+            </div>
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    GOLD
+                </span>
+                <span class="up">
+                    ▲ +0.61%
+                </span>
+            </div>
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    EUR/USD
+                </span>
+                <span class="up">
+                    ▲ +0.31%
+                </span>
+            </div>
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    NASDAQ
+                </span>
+                <span class="up">
+                    ▲ +0.92%
+                </span>
+            </div>
+
+
+            <!-- Duplicate for seamless animation -->
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    BTC/USD
+                </span>
+                <span class="up">
+                    ▲ +2.48%
+                </span>
+            </div>
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    ETH/USD
+                </span>
+                <span class="up">
+                    ▲ +1.73%
+                </span>
+            </div>
+
+
+            <div class="ticker-item">
+                <span class="ticker-symbol">
+                    VOLATILITY 100
+                </span>
+                <span class="down">
+                    ▼ -0.84%
+                </span>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <nav>
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#markets">
+            Markets
+        </a>
+
+        <a href="#crypto">
+            Crypto
+        </a>
+
+        <a href="#volatility">
+            Volatility
+        </a>
+
+        <a href="#learn">
+            Learn
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+    </nav>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main id="home">
+
+        <section class="hero">
+
+
+            <div class="hero-text">
+
+                <div class="hero-badge">
+
+                    <span class="pulse"></span>
+
+                    Markets at your fingertips
+
+                </div>
+
+
+                <h2>
+
+                    Invest smarter.
+                    <br>
+
+                    <span>Start simple.</span>
+
+                </h2>
+
+
+                <p>
+
+                    Explore cryptocurrencies, digital assets,
+                    global markets and volatility-style indices
+                    through a clean platform designed with
+                    beginners in mind.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="primary-btn"
+                        onclick="demoMessage('Start Investing')"
+                    >
+
+                        Start Investing
+
+                    </button>
+
+
+                    <button
+                        class="secondary-btn"
+                        onclick="scrollToMarkets()"
+                    >
+
+                        Explore Markets
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MARKET PREVIEW
+            ================================================== -->
+
+            <div class="market-preview">
+
+
+                <div class="market-top">
+
+                    <div>
+
+                        <small>
+                            Market Preview
+                        </small>
+
+                        <h3>
+                            BTC / USD
+                        </h3>
+
+                    </div>
+
+
+                    <div class="market-price">
+
+                        $67,420
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-area">
+
+                    <div class="grid-lines"></div>
+
+
+                    <div class="chart-line">
+
+                        <svg
+                            viewBox="0 0 600 230"
+                            preserveAspectRatio="none"
+                        >
+
+                            <polyline
+                                class="chart-stroke"
+                                points="
+                                0,185
+                                60,165
+                                110,175
+                                160,125
+                                205,145
+                                250,105
+                                300,125
+                                350,80
+                                405,105
+                                450,65
+                                510,82
+                                600,35
+                                "
+                            />
+
+                        </svg>
+
+                    </div>
+
+                </div>
+
+
+                <div class="market-footer">
+
+                    <span>
+                        24H Change
+                    </span>
+
+                    <span class="positive">
+                        +2.48%
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ASSET SECTION
+        ====================================================== -->
+
+        <section
+            class="assets"
+            id="markets"
+        >
+
+            <div class="section-heading">
+
+                <h2>
+                    Explore the markets
+                </h2>
+
+                <p>
+
+                    Everything is organized into simple
+                    categories so new investors can understand
+                    what they are looking at.
+
+                </p>
+
+            </div>
+
+
+            <div class="asset-grid">
+
+
+                <!-- CRYPTO -->
+
+                <article
+                    class="asset-card"
+                    id="crypto"
+                >
+
+                    <div class="asset-icon">
+                        ₿
+                    </div>
+
+                    <h3>
+                        Cryptocurrency
+                    </h3>
+
+                    <p>
+
+                        Explore digital assets such as
+                        Bitcoin and other supported
+                        cryptocurrencies.
+
+                    </p>
+
+                    <a
+                        href="#"
+                        class="learn-link"
+                        onclick="demoMessage('Cryptocurrency Markets'); return false;"
+                    >
+
+                        Explore Crypto →
+
+                    </a>
+
+                </article>
+
+
+                <!-- VOLATILITY -->
+
+                <article
+                    class="asset-card"
+                    id="volatility"
+                >
+
+                    <div class="asset-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Volatility Indices
+                    </h3>
+
+                    <p>
+
+                        Explore synthetic volatility-style
+                        indices. Products and availability
+                        depend on the actual provider integration.
+
+                    </p>
+
+                    <a
+                        href="#"
+                        class="learn-link"
+                        onclick="demoMessage('Volatility Markets'); return false;"
+                    >
+
+                        View Indices →
+
+                    </a>
+
+                </article>
+
+
+                <!-- GLOBAL MARKETS -->
+
+                <article
+                    class="asset-card"
+                >
+
+                    <div class="asset-icon">
+                        🌎
+                    </div>
+
+                    <h3>
+                        Global Markets
+                    </h3>
+
+                    <p>
+
+                        Create a simple interface for
+                        exploring currencies, commodities,
+                        indices and other supported markets.
+
+                    </p>
+
+                    <a
+                        href="#"
+                        class="learn-link"
+                        onclick="demoMessage('Global Markets'); return false;"
+                    >
+
+                        View Markets →
+
+                    </a>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             BEGINNER SECTION
+        ====================================================== -->
+
+        <section
+            class="beginner"
+            id="learn"
+        >
+
+            <div class="beginner-container">
+
+
+                <div>
+
+                    <h2>
+                        Built for beginners.
+                    </h2>
+
+                    <p>
+
+                        NIVO's interface is designed to avoid
+                        overwhelming new users. The idea is to
+                        make each important action easy to find
+                        and explain financial products before a
+                        user makes a decision.
+
+                    </p>
+
+
+                    <button
+                        class="primary-btn"
+                        onclick="demoMessage('Learning Center')"
+                    >
+
+                        Start Learning
+
+                    </button>
+
+                </div>
+
+
+                <div class="steps">
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Learn
+                            </strong>
+
+                            <p>
+                                Understand the asset and its risks.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Explore
+                            </strong>
+
+                            <p>
+                                Compare available markets.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Decide
+                            </strong>
+
+                            <p>
+                                Make your own informed decision.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            4
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Manage
+                            </strong>
+
+                            <p>
+                                Monitor your portfolio and activity.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             REGIONS
+        ====================================================== -->
+
+        <section
+            class="regions"
+            id="about"
+        >
+
+            <h2>
+                Designed for a global audience
+            </h2>
+
+            <p>
+                Regional availability and products must be
+                configured according to applicable laws.
+            </p>
+
+
+            <div class="region-buttons">
+
+                <button
+                    class="region"
+                    onclick="selectRegion('United States')"
+                >
+                    🇺🇸 United States
+                </button>
+
+                <button
+                    class="region"
+                    onclick="selectRegion('United Kingdom')"
+                >
+                    🇬🇧 United Kingdom
+                </button>
+
+                <button
+                    class="region"
+                    onclick="selectRegion('Canada')"
+                >
+                    🇨🇦 Canada
+                </button>
+
+                <button
+                    class="region"
+                    onclick="selectRegion('China')"
+                >
+                    🇨🇳 China
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         RISK NOTICE
+    ====================================================== -->
+
+    <div class="risk">
+
+        <strong>Risk warning:</strong>
+
+        Investments and trading products can lose value.
+        Past performance does not guarantee future results.
+        The information shown on this demonstration website
+        is not investment advice.
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="footer-grid">
+
+
+            <div class="footer-brand">
+
+                <h2>
+                    NIV<span>O</span>
+                </h2>
+
+                <p>
+
+                    A modern interface concept designed to
+                    make financial markets easier to explore.
+
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Platform
+                </h4>
+
+                <a href="#markets">
+                    Markets
+                </a>
+
+                <a href="#crypto">
+                    Crypto
+                </a>
+
+                <a href="#volatility">
+                    Volatility
+                </a>
+
+                <a href="#learn">
+                    Learn
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Company
+                </h4>
+
+                <a href="#">
+                    About
+                </a>
+
+                <a href="#">
+                    Contact
+                </a>
+
+                <a href="#">
+                    Careers
+                </a>
+
+                <a href="#">
+                    Help Center
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Legal
+                </h4>
+
+                <a href="#">
+                    Terms
+                </a>
+
+                <a href="#">
+                    Privacy
+                </a>
+
+                <a href="#">
+                    Risk Disclosure
+                </a>
+
+                <a href="#">
+                    Cookie Policy
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="copyright">
+
+            © 2026 NIVO. All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        /*
+        ========================================================
+        DEMO INTERACTION
+
+        These buttons intentionally do not process real money.
+        Connect them to your real backend later.
+        ========================================================
+        */
+
+        function demoMessage(action) {
+
+            alert(
+                action +
+                " is currently in demo mode."
+            );
+
+        }
+
+
+        /*
+        ========================================================
+        SCROLL TO MARKETS
+        ========================================================
+        */
+
+        function scrollToMarkets() {
+
+            const section =
+                document.getElementById("markets");
+
+            section.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /*
+        ========================================================
+        REGION SELECTOR
+        ========================================================
+        */
+
+        function selectRegion(region) {
+
+            alert(
+                "Selected region: " +
+                region +
+                "\n\n" +
+                "The production platform should show only " +
+                "products and services legally available " +
+                "in this region."
+            );
+
+        }
+
+
+        /*
+        ========================================================
+        SIMPLE LIVE CLOCK
+        ========================================================
+        */
+
+        console.log(
+            "NIVO platform interface loaded successfully."
+        );
+
+    </script>
+
+</body>
+</html>
